@@ -1,11 +1,11 @@
 <?php
 include "constant.php";
 session_start();
-
+unset($_SESSION['errors']);
 $formType = $_POST['form_type'];
-var_dump($formType);
 $errors = [];
 if ($formType == 'personal') {
+
     $personalInfo = $_POST['personal'];
 
     if (!$personalInfo['given_name'] || !$personalInfo['family_name']
@@ -31,10 +31,19 @@ if ($formType == 'personal') {
 
 } elseif ($formType == 'payment') {
     $paymentDetail = $_POST['payment'];
-
-    if (!$paymentDetail['credit_card_type'] || !$paymentDetail['credit_card_number']
-        || !$paymentDetail['expired_month'] || !$paymentDetail['expired_year']) {
+    if (!$paymentDetail['card_type']
+        || !$paymentDetail['credit_card_number']
+        || !$paymentDetail['expired_month']
+        || !$paymentDetail['expired_year']) {
         $errors[] = ERROR_REQUIRED_MESSAGE;
+    }
+
+    if ($paymentDetail['expired_year'] < 2016 || ($paymentDetail['expired_year'] == 2016 && $paymentDetail['expired_month'] < 5)) {
+        $errors[] = ERROR_INVALID_EXPIRED_CARD;
+    }
+
+    if (!preg_match('/^[0-9]{12}$/', $paymentDetail['credit_card_number'])) {
+        $errors[] = ERROR_INVALID_CARD_NUMBER;
     }
 
     if (!empty($errors)) {

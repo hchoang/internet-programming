@@ -1,5 +1,6 @@
 <?php
 session_start ();
+include "common.php";
 ?>
 <!DOCTYPE html>
 <html lang="en" class="gr__getbootstrap_com">
@@ -35,17 +36,28 @@ session_start ();
     <?php
     include 'navi-bar.php';
     $personalInfo = $_SESSION['personal'];
+    $errors = $_SESSION['errors'];
     ?>
     <legend>Personal Information</legend>
     <table class="table table-bordered">
         <?php
             foreach ($personalInfo as $key => $value) {
-                echo "<tr><td>$key</td><td>$value</td></tr>";
+                echo "<tr><td>". personalInfoTransform($key). "</td><td>$value</td></tr>";
             }
         ?>
     </table>
     <legend>Payment Details</legend>
-    <form role="form" class="form-horizontal" method="post" action="form_checking.php">
+    <div class="alert alert-warning <?php if (empty($errors)) echo 'hidden' ?>" id="errors">
+        <strong>Error!</strong>
+        <ul class="error-list">
+            <?php
+                foreach ($errors as $error) {
+                    echo "<li>$error</li>";
+                }
+            ?>
+        </ul>
+    </div>
+    <form role="form" class="form-horizontal" method="post" action="form_checking.php" id="payment_form">
         <input type="hidden" name="form_type" value="payment">
         <div class="form-group">
             <label class="control-label col-sm-2" for="credit_card_type">Credit Card Type:</label>
@@ -61,7 +73,7 @@ session_start ();
         <div class="form-group">
             <label class="control-label col-sm-2" for="credit_card_number">Credit Card Number:</label>
             <div class="col-sm-10">
-                <input name="credit_card_number" required="required" type="text" class="form-control" id="credit_card_number" placeholder="Credit Card Number">
+                <input name="payment[credit_card_number]" required="required" type="text" class="form-control" id="credit_card_number" placeholder="Credit Card Number">
             </div>
         </div>
         <div class="form-group">
@@ -90,7 +102,11 @@ session_start ();
                 </select>
             </div>
         </div>
-        <div class="form-group"></div>
+        <div class="form-group">
+            <div class="col-sm-2 col-sm-offset-10">
+                <input type="submit" class="btn btn-success pull-right" value="Review Bookings and Details" id="payment_submit">
+            </div>
+        </div>
     </form>
 
 
@@ -99,7 +115,6 @@ session_start ();
 
 </div>
 <!-- /container -->
-
 
 <?php
 include 'script.php';
