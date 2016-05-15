@@ -10,7 +10,7 @@ session_start ();
 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 <meta content="" name="description">
 <meta content="" name="author">
-
+<script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
 <title>Internet Programming - Assingment 1</title>
 
 <!-- Bootstrap core CSS -->
@@ -30,6 +30,7 @@ session_start ();
 </head>
 
 <body onload="showNum()">
+
 	<script type="text/javascript">
 
 	var my_number = 0;
@@ -75,10 +76,69 @@ function validate()
 {
    var table = document.getElementsByName('seatCheck');
    var i;
+   var string="<?php echo $_SESSION ['bookingData']; ?>";
+   var flightNo = "<?php echo $_GET ['flightChecked']; ?>" ;
+
+   
+   for(i=0; i<table.length; i++){
+
+	   if (table[i].checked == true )
+	   {
+		   var n = i+1;
+		   string = string.concat(" ", flightNo);
+
+		   if(document.getElementById("child"+n).checked  == true){
+			   
+			   if(document.getElementById("wheel"+n).checked == true){
+				   
+				   if(document.getElementById("diet"+n).checked == true){
+					   string = string.concat(" ", "0");
+				   }
+				   else{
+					   string = string.concat(" ", "1");
+				   }
+			   }
+				   
+			   else{
+				   if(document.getElementById("diet"+n).checked == true){
+						   string = string.concat(" ", "2");
+					   }
+				   else{
+						   string = string.concat(" ", "3");
+					   }
+				   }   
+		   }
+		   else{
+ 				if(document.getElementById("wheel"+n).checked == true){
+				   
+				   if(document.getElementById("diet"+n).checked == true){
+					   string = string.concat(" ", "4");
+				   }
+				   else{
+					   string = string.concat(" ", "5");
+				   }
+			   }
+				   
+			   else{
+				   if(document.getElementById("diet"+n).checked == true){
+						   string = string.concat(" ", "6");
+					   }
+				   else{
+						   string = string.concat(" ", "7");
+					   }
+				   }   
+		   }
+		}
+	}
+	   
+  
+ 	document.getElementById("hiddenInput").value = string;
+ 	  
    for(i=0; i<table.length; i++){
 	   
 		if (table[i].checked == true )
 		{
+			
 			return true;
 		}
    }
@@ -96,7 +156,7 @@ function validate()
 		
 <?php
 $_SESSION ['flightSelected'] = $_GET ['flightChecked'];
-$link = mysql_connect ( "localhost", "root", "noinhieula" );
+$link = mysql_connect ( "rerun", "potiro", "pcXZb(kL" );
 if (! $link)
 	die ( "Could not connect to Server" );
 mysql_select_db ( "poti", $link );
@@ -168,7 +228,9 @@ while ( $a_row = mysql_fetch_assoc ( $result ) ) {
 					</tr>
 				</table>
 				<input type="submit" value="Add to Bookings"
-					class="btn btn-default btn-lg">
+					class="btn btn-default btn-lg"> <input type="hidden"
+					name="bookingData" id="hiddenInput"
+					value="<?php $yes= "<p id='hiddenInput'> </p>"; echo $yes;?>">
 			</form>
 		</div>
 
@@ -178,11 +240,9 @@ while ( $a_row = mysql_fetch_assoc ( $result ) ) {
 
 	</div>
 	<!-- /container -->
-
-
-	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-	<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
-
+<?php
+include 'script.php';
+?>
 
 </body>
 <span class="gr__tooltip"> <span class="gr__tooltip-content"></span> <i

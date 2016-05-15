@@ -34,89 +34,63 @@ session_start ();
 <div class="container">
     <?php
     include 'navi-bar.php';
+    $personalInfo = $_SESSION['personal'];
     ?>
-    <form role="form" class="form-horizontal" method="post" action="complete_booking.php" onsubmit="validate();">
-        <legend>Personal Information</legend>
+    <legend>Personal Information</legend>
+    <table class="table table-bordered">
+        <?php
+            foreach ($personalInfo as $key => $value) {
+                echo "<tr><td>$key</td><td>$value</td></tr>";
+            }
+        ?>
+    </table>
+    <legend>Payment Details</legend>
+    <form role="form" class="form-horizontal" method="post" action="form_checking.php">
+        <input type="hidden" name="form_type" value="payment">
         <div class="form-group">
-            <label class="control-label col-sm-2" for="famiy_name">Family Name:</label>
+            <label class="control-label col-sm-2" for="credit_card_type">Credit Card Type:</label>
             <div class="col-sm-10">
-                <input required="required" type="text" class="form-control" id="family_name" placeholder="Family Name">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="given_name">Given Name:</label>
-            <div class="col-sm-10">
-                <input required="required" type="text" class="form-control" id="given_name" placeholder="Given Name">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="address_1">Address Line 1: </label>
-            <div class="col-sm-10">
-                <input required="required" type="text" class="form-control" id="address_1" placeholder="Address">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="address_2">Address Line 2: </label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="address_2" placeholder="Address">
-            </div>
-        </div>
-        <div class="form-group">
-
-        </div>
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="country">Country: </label>
-            <div class="col-sm-10">
-                <select required="required" class="form-control" id="country">
-                    <option disabled selected value> -- select an option -- </option>
-                    <option value="Australia">Australia</option>
-                    <option value="U.S">U.S</option>
+                <select required="required" name="payment[card_type]" id="credit_card_type" class="form-control">
+                    <option value="visa">VISA</option>
+                    <option value="mastercard">Mastercard</option>
+                    <option value="diners">Diners</option>
+                    <option value="amex">Amex</option>
                 </select>
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-2" for="state">State: </label>
+            <label class="control-label col-sm-2" for="credit_card_number">Credit Card Number:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="state" placeholder="State">
+                <input name="credit_card_number" required="required" type="text" class="form-control" id="credit_card_number" placeholder="Credit Card Number">
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-2" for="suburb">Suburb: </label>
+            <label class="control-label col-sm-2" for="expired_month">Expired Month: </label>
             <div class="col-sm-4">
-                <input required="required" type="text" class="form-control" id="suburb" placeholder="Suburb">
+                <select required="required" name="payment[expired_month]" id="expired_month" class="form-control">
+                    <?php
+                    for ($i = 1; $i <= 12; $i++) {
+                        if ($i < 10)
+                            echo "<option value='$i'>0$i</option>";
+                        else
+                            echo "<option value='$i'>$i</option>";
+
+                    }
+                    ?>
+                </select>
             </div>
-            <label class="control-label col-sm-2" for="postcode">Postcode </label>
+            <label class="control-label col-sm-2" for="expired_year">Expired Year: </label>
             <div class="col-sm-4">
-                <input type="text" class="form-control" id="postcode" placeholder="Postcode">
+                <select required="required" name="payment[expired_year]" id="expired_year" class="form-control">
+                    <?php
+                    for ($i = 2016; $i < 2030; $i++) {
+                        echo "<option value='$i'>$i</option>";
+                    }
+                    ?>
+                </select>
             </div>
         </div>
-
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="email">Email:</label>
-            <div class="col-sm-10">
-                <input required="required" type="email" class="form-control" id="email" placeholder="Email">
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <div class="form-group">
-                    <label class="control-label col-sm-2" for="mobile_number">Contact Number: </label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="mobile_number" placeholder="Mobile Phone Number">
-                    </div>
-                    <div class="col-sm-10 col-sm-offset-2 hidden">
-                        <input type="text" class="form-control" id="business_number" placeholder="Business Phone Number">
-                    </div>
-                    <div class="col-sm-10 col-sm-offset-2 hidden">
-                        <input type="text" class="form-control" id="work_number" placeholder="Work Phone Number">
-                    </div>
-                    <div class="col-sm-2 col-sm-offset-10 btn btn-default">
-                        Add More Number
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        <div class="form-group"></div>
     </form>
 
 

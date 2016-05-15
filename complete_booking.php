@@ -35,13 +35,13 @@ session_start ();
     <?php
         include 'navi-bar.php';
     ?>
+        <legend>Personal Information</legend>
         <form role="form" class="form-horizontal" method="post" action="form_checking.php" >
-            <legend>Personal Information</legend>
-            <input type="hidden" value="personal">
+            <input type="hidden" name="form_type" value="personal">
             <div class="form-group">
                 <label class="control-label col-sm-2" for="famiy_name">Family Name:</label>
                 <div class="col-sm-10">
-                    <input name="personal[family_name]" required="required" type="text" class="form-control" id="family_name" placeholder="Family Name">
+                    <input required="required" name="personal[family_name]" type="text" class="form-control" id="family_name" placeholder="Family Name">
                 </div>
             </div>
             <div class="form-group">
@@ -61,9 +61,6 @@ session_start ();
                 <div class="col-sm-10">
                     <input name="personal[address_2]" type="text" class="form-control" id="address_2" placeholder="Address">
                 </div>
-            </div>
-            <div class="form-group">
-
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="country">Country: </label>
@@ -118,7 +115,8 @@ session_start ();
                 </div>
             </div>
             <div class="form-group">
-                <input type="submit" value="Stage 2 - Payment Details">
+                <div class="col-sm-10"></div>
+                <input class="btn btn-default btn-success col-sm-2 form-control" type="submit" value="Stage 2 - Payment Details">
             </div>
 
         </form>
