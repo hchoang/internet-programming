@@ -115,8 +115,11 @@ if (isset ( $_SESSION ["bookingData"] )) {
 } 
 
 else {
-	echo "<br /><br /><br /><h2>You have no bookings!</h2><br/><br />";
-	echo "<a class='btn btn-default btn-lg' href='search.php' role='button'>" . "New Search" . "</a>";
+	echo "<br /><br /><br/><div class='jumbotron'>
+		<h2>You have no bookings!</h2><br/><br />
+		<a class='btn btn-default btn-lg' href='search.php' role='button'>" . "New Search" . "</a>
+	</div>";
+	echo "";
 }
 
 mysql_close ( $link );

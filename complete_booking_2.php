@@ -98,9 +98,12 @@ include "common.php";
             </div>
         </div>
         <div class="form-group">
-            <div class="col-sm-2 col-sm-offset-10">
-                <input type="submit" class="btn btn-default btn-lg pull-right" value="Stage 3 - Review Bookings and Details" id="payment_submit">
-            </div>
+
+                <button type="submit" class="btn-lg btn btn-default pull-right" id="payment_submit">
+                    Stage 3 - Review Bookings and Details
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                </button>
+
         </div>
     </form>
 

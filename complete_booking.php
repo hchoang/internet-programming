@@ -152,7 +152,10 @@ include "common.php";
 
             <div class="form-group">
                 <div class="col-sm-2 col-sm-offset-10"></div>
-                <input id="personal_submit" class="btn btn-default btn-lg pull-right" type="submit" value="Stage 2 - Payment Details">
+                <button type="submit" id="personal_submit" class="btn btn-default btn-lg pull-right">
+                    Stage 2 - Payment Details
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                </button>
             </div>
         </form>
     </div>

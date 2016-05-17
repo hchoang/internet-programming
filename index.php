@@ -21,20 +21,52 @@
  <?php
 	include 'navi-bar.php';
 	?>
+		<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+			<!-- Indicators -->
+			<ol class="carousel-indicators">
+				<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+				<li data-target="#carousel-example-generic" data-slide-to="1"></li>
+				<li data-target="#carousel-example-generic" data-slide-to="2"></li>
+			</ol>
 
+			<!-- Wrapper for slides -->
+			<div class="carousel-inner" role="listbox">
+				<div class="item active">
+					<img src="img/img1.jpg" alt="..." class="carousel-image">
+					<div class="carousel-caption">
+						...
+					</div>
+				</div>
+				<div class="item">
+					<img src="img/img2.jpg" alt="..." class="carousel-image">
+					<div class="carousel-caption">
+						...
+					</div>
+				</div>
+				<div class="item">
+					<img src="img/img3.jpg" alt="..." class="carousel-image">
+					<div class="carousel-caption">
+						...
+					</div>
+				</div>
+
+			</div>
+
+			<!-- Controls -->
+			<a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+				<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+				<span class="sr-only">Previous</span>
+			</a>
+			<a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+				<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+				<span class="sr-only">Next</span>
+			</a>
+		</div>
 		<!-- Jumbotron -->
 		<div class="jumbotron">
-			<h1>Internet Programming - Assignment 1</h1>
-			<p class="lead">
-				This assignment requires you to create an Online Travel Agency. Visitors to the site can book airline
-				tickets and pay by credit card. Details of the trips booked by them are sent by email.
-				The website is menu driven. You can use the basic site code (including image maps) learned from the
-				lecture or you can use your own code if you prefer. The first thing you will have to do is add a
-				"Your Bookings" menu option. This can be added as part of the main menu or (preferably) as a
-				link elsewhere on the page. It should always be available to visitors to the site no
-				matter what web page on the site they happen to be looking at.
-
-			</p>
+			<h2>Welcome to UTS Travel Agency</h2>
+            <button class="btn btn-default"><a class="unstyled-a" href="search.php">Search Flight</a></button>
+            <button class="btn btn-default"><a class="unstyled-a" href="booking.php">Your Bookings</a></button>
 		</div>
 
 

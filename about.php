@@ -24,10 +24,22 @@
 			include 'navi-bar.php';
 			?>
 
-		<!-- Jumbotron -->
 		<div class="jumbotron">
 			<h1>Internet Programming - Assignment 1</h1>
-			<p class="lead">To be described</p>
+			<p class="lead">
+				This assignment requires you to create an Online Travel Agency. Visitors to the site can book airline
+				tickets and pay by credit card. Details of the trips booked by them are sent by email.
+				The website is menu driven. You can use the basic site code (including image maps) learned from the
+				lecture or you can use your own code if you prefer. The first thing you will have to do is add a
+				"Your Bookings" menu option. This can be added as part of the main menu or (preferably) as a
+				link elsewhere on the page. It should always be available to visitors to the site no
+				matter what web page on the site they happen to be looking at.
+			</p>
+			<div>
+				This assignment is the work of 2 member: <br>
+				Huy Cat Hoang - 11940653 <br>
+				Weijian Cheng - 11914595
+			</div>
 		</div>
 
 	</div>

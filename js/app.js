@@ -1,5 +1,8 @@
 $(document).ready(function () {
 
+    $('.carousel').carousel();
+
+
     $('#country').change(function () {
         if ($(this).val() == 'AUS') {
             $('#state').prop('required', true);
