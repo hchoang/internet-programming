@@ -13,20 +13,9 @@ session_start ();
 <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
 <title>Internet Programming - Assingment 1</title>
 
-<!-- Bootstrap core CSS -->
-<link rel="stylesheet" href="css/bootstrap.min.css">
-
-<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<link rel="stylesheet" href="css/ie10-viewport-bug-workaround.css">
-
-<!-- Custom styles for this template -->
-<link rel="stylesheet" href="css/justified-nav.css">
-
-<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-<!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <?php
+        include 'style.php';
+    ?>
 </head>
 
 <body onload="showNum()">
@@ -156,10 +145,7 @@ function validate()
 		
 <?php
 $_SESSION ['flightSelected'] = $_GET ['flightChecked'];
-$link = mysql_connect ( "localhost", "root", "noinhieula" );
-if (! $link)
-	die ( "Could not connect to Server" );
-mysql_select_db ( "poti", $link );
+include "database_connector.php";
 $flightNo = $_SESSION ['flightSelected'];
 $query_string = "select * from flights where (route_no = '$flightNo')";
 $result = mysql_query ( $query_string );
@@ -167,8 +153,6 @@ while ( $a_row = mysql_fetch_assoc ( $result ) ) {
 	echo '<br /><h2>You selected flight: ' . $a_row ['from_city'] . ' to ' . $a_row ['to_city'] . '<br />Price: $' . $a_row ['price'] . 'ea</h2><br />';
 }
 ?>
-
-
 		<div class='container col-md-9'>
 			<form action="allBookedFlight.php" method="post"
 				onSubmit="return validate();">
@@ -227,17 +211,11 @@ while ( $a_row = mysql_fetch_assoc ( $result ) ) {
 						</td>
 					</tr>
 				</table>
-				<input type="submit" value="Add to Bookings"
-					class="btn btn-default btn-lg"> <input type="hidden"
-					name="bookingData" id="hiddenInput"
-					value="<?php $yes= "<p id='hiddenInput'> </p>"; echo $yes;?>">
+				<input type="submit" value="Add to Bookings" class="btn btn-default btn-lg">
+				<input type="hidden" name="bookingData" id="hiddenInput" value="<?php $yes= "<p id='hiddenInput'> </p>"; echo $yes;?>">
 			</form>
 		</div>
-
-
-
-		<!-- Site footer -->
-
+        <!-- Site footer -->
 	</div>
 	<!-- /container -->
 <?php

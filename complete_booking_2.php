@@ -12,22 +12,11 @@ include "common.php";
     <meta content="" name="description">
     <meta content="" name="author">
 
-    <title>Internet Programming - Assingment 1</title>
+    <title>Complete Booking - Stage 2 of 4 - Payment Details</title>
 
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link rel="stylesheet" href="css/ie10-viewport-bug-workaround.css">
-
-    <!-- Custom styles for this template -->
-    <link rel="stylesheet" href="css/justified-nav.css">
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <?php
+        include 'style.php';
+    ?>
 </head>
 
 <body>
@@ -35,19 +24,26 @@ include "common.php";
 <div class="container">
     <?php
     include 'navi-bar.php';
-    $personalInfo = $_SESSION['personal'];
+    $personalInfo = getPersonalInfoFromSession();
     $errors = $_SESSION['errors'];
     ?>
-    <legend>Personal Information</legend>
-    <table class="table table-bordered">
+    <br>
+    <br>
+    <legend class="col-sm-9 col-sm-offset-1">Personal Details</legend>
+    <table class="table table-bordered table-striped table-unfluid">
         <?php
+            $countries = countryList();
             foreach ($personalInfo as $key => $value) {
-                echo "<tr><td>". personalInfoTransform($key). "</td><td>$value</td></tr>";
+                if (strcmp($key, 'country') == 0) {
+                    $value = $countries[$value];
+                }
+                $value = ($value) ? $value : "N/A";
+                echo "<tr><td><span style='font-weight: bold;'>". personalInfoTransform($key). "</span></td><td>$value</td></tr>";
             }
         ?>
     </table>
-    <legend>Payment Details</legend>
-    <div class="alert alert-warning <?php if (empty($errors)) echo 'hidden' ?>" id="errors">
+    <legend class="col-sm-9 col-sm-offset-1">Complete Booking - Stage 2 of 4 - Payment Details</legend>
+    <div class="col-sm-offset-1 col-sm-9 alert alert-warning <?php if (empty($errors)) echo 'hidden' ?>" id="errors">
         <strong>Error!</strong>
         <ul class="error-list">
             <?php
@@ -57,7 +53,7 @@ include "common.php";
             ?>
         </ul>
     </div>
-    <form role="form" class="form-horizontal" method="post" action="form_checking.php" id="payment_form">
+    <form role="form" class="form-horizontal col-sm-9 col-sm-offset-1" method="post" action="form_checking.php" id="payment_form">
         <input type="hidden" name="form_type" value="payment">
         <div class="form-group">
             <label class="control-label col-sm-2" for="credit_card_type">Credit Card Type:</label>
@@ -86,7 +82,6 @@ include "common.php";
                             echo "<option value='$i'>0$i</option>";
                         else
                             echo "<option value='$i'>$i</option>";
-
                     }
                     ?>
                 </select>
@@ -104,14 +99,10 @@ include "common.php";
         </div>
         <div class="form-group">
             <div class="col-sm-2 col-sm-offset-10">
-                <input type="submit" class="btn btn-success pull-right" value="Review Bookings and Details" id="payment_submit">
+                <input type="submit" class="btn btn-default btn-lg pull-right" value="Stage 3 - Review Bookings and Details" id="payment_submit">
             </div>
         </div>
     </form>
-
-
-    <!-- Site footer -->
-    <footer class="footer"> </footer>
 
 </div>
 <!-- /container -->

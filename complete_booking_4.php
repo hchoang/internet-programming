@@ -1,5 +1,5 @@
 <?php
-session_destroy();
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en" class="gr__getbootstrap_com">
@@ -13,19 +13,9 @@ session_destroy();
 
     <title>Internet Programming - Assingment 1</title>
 
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link rel="stylesheet" href="css/ie10-viewport-bug-workaround.css">
-
-    <!-- Custom styles for this template -->
-    <link rel="stylesheet" href="css/justified-nav.css">
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <?php
+        include 'style.php';
+    ?>
     <![endif]-->
 </head>
 
@@ -35,13 +25,17 @@ session_destroy();
     <?php
     include 'navi-bar.php';
     include "common.php";
-    sendEmail();
+    $personalInfo = getPersonalInfoFromSession();
+    sendEmail($personalInfo);
+    
+    session_destroy();
     ?>
 
-    <!-- Jumbotron -->
+    <br>
+    <br>
+    <legend>Complete Booking - Stage 4 of 4 - Confirm Payment</legend>
     <div class="jumbotron">
-        <h1>Internet Programming - Assignment 1</h1>
-        <p class="lead">To be described</p>
+        <span style="font-weight: bolder; font-size: large">Thank You - Your Booking has been completed and an email has been sent to your email address</span>
     </div>
 
 

@@ -1,0 +1,17 @@
+.required {
+    color:red;
+}
+
+.table-unfluid {
+    width: 75% !important;
+    margin-left: 8.3333%;
+}
+
+.unstyled-a {
+    color: black;
+}
+
+.unstyled-a:hover, .unstyled-a:focus {
+    color: black;
+    text-decoration: none;
+}

@@ -13,20 +13,9 @@ session_start ();
 <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
 <title>Internet Programming - Assingment 1</title>
 
-<!-- Bootstrap core CSS -->
-<link rel="stylesheet" href="css/bootstrap.min.css">
-
-<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<link rel="stylesheet" href="css/ie10-viewport-bug-workaround.css">
-
-<!-- Custom styles for this template -->
-<link rel="stylesheet" href="css/justified-nav.css">
-
-<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-<!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+	<?php
+		include 'style.php';
+	?>
 </head>
 
 <body>
@@ -55,13 +44,10 @@ function validate()
 			include 'navi-bar.php';
 			?>
 
-		<form action="booking.php" method="post" onSubmit="return validate();">		
+		<form action="booking.php" method="post" onSubmit="return validate();">
 <?php
 
-$link = mysql_connect ( "rerun", "potiro", "pcXZb(kL" );
-if (! $link)
-	die ( "Could not connect to Server" );
-mysql_select_db ( "poti", $link );
+include 'database_connector.php';
 
 if (isset ( $_POST ['deleteFlight'] )) {
 	$string = $_SESSION ['bookingData'];
@@ -94,23 +80,23 @@ if (isset ( $_SESSION ["bookingData"] )) {
 		$condition = $array [$i + 1];
 		$query_string = "select * from flights where (route_no = '$flight')";
 		$result = mysql_query ( $query_string );
-		
+		$detail = "None";
 		if ($condition == "0") {
-			$detial = "Child, Wheelchair, Special Diet";
+			$detail = "Child, Wheelchair, Special Diet";
 		} else if ($condition == "1") {
-			$detial = "Child, Wheelchair";
+			$detail = "Child, Wheelchair";
 		} else if ($condition == "2") {
-			$detial = "Child, SpecialDiet";
+			$detail = "Child, SpecialDiet";
 		} else if ($condition == "3") {
-			$detial = "Child";
+			$detail = "Child";
 		} else if ($condition == "4") {
-			$detial = "Wheelchair, Special Diet";
+			$detail = "Wheelchair, Special Diet";
 		} else if ($condition == "5") {
-			$detial = "Wheelchair";
+			$detail = "Wheelchair";
 		} else if ($condition == "6") {
-			$detial = "Special Diet";
+			$detail = "Special Diet";
 		} else if ($condition == "7") {
-			$detial = "None";
+			$detail = "None";
 		}
 		
 		while ( $a_row = mysql_fetch_assoc ( $result ) ) {
@@ -118,7 +104,7 @@ if (isset ( $_SESSION ["bookingData"] )) {
 			echo "<td class='col-md-2'>" . $a_row ['from_city'] . "</td>";
 			echo "<td class='col-md-2'>" . $a_row ['to_city'] . "</td>";
 			echo "<td class='col-md-2'>" . $a_row ['price'] . "</td>";
-			echo "<td class='col-md-3'>" . $detial . "</td>";
+			echo "<td class='col-md-3'>" . $detail . "</td>";
 			echo "<td class='col-md-1'><input type='checkbox' name='deleteFlight[]' id ='deleteFlight' value= '" . $i . "'</td>";
 			echo "</tr>";
 		}

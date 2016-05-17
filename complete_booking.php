@@ -1,5 +1,6 @@
 <?php
 session_start ();
+include "common.php";
 ?>
 <!DOCTYPE html>
 <html lang="en" class="gr__getbootstrap_com">
@@ -11,22 +12,13 @@ session_start ();
 <meta content="" name="description">
 <meta content="" name="author">
 
-<title>Internet Programming - Assingment 1</title>
+<title>Complete Booking - stage 1 of 4 - Personal Details</title>
 
-<!-- Bootstrap core CSS -->
-<link rel="stylesheet" href="css/bootstrap.min.css">
-
-<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<link rel="stylesheet" href="css/ie10-viewport-bug-workaround.css">
-
-<!-- Custom styles for this template -->
-<link rel="stylesheet" href="css/justified-nav.css">
+    <?php
+        include "style.php";
+    ?>
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-<!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
 </head>
 
 <body>
@@ -34,103 +26,141 @@ session_start ();
     <div class="container">
     <?php
         include 'navi-bar.php';
+        $errors = $_SESSION['errors'];
+        $errorInput = $_SESSION['personal_error'];
     ?>
-        <legend>Personal Information</legend>
-        <form role="form" class="form-horizontal" method="post" action="form_checking.php" >
+        <br><br>
+        <div class="col-sm-12">
+            <legend class="col-sm-9 col-sm-offset-1">Complete Booking - Stage 1 of 4 - Personal Details</legend>
+        </div>
+
+        <span class="col-sm-12 col-sm-offset-1" style="color: red;font-style: italic">-- * Indicated required field --</span>
+        <span class="col-sm-12 col-sm-offset-1" style="color: red; font-style: italic">-- State and Postcode field is optional when booking is made from outside Australia</span>
+
+        <div class="col-sm-9 col-sm-offset-1 alert alert-warning <?php if (empty($errors)) echo 'hidden' ?>" id="errors">
+            <strong>Error!</strong>
+            <ul class="error-list">
+                <?php
+                foreach ($errors as $error) {
+                    echo "<li>$error</li>";
+                }
+                ?>
+            </ul>
+        </div>
+        <form id="personal_form" role="form" class="form-horizontal col-sm-9 col-sm-offset-1" method="post" action="form_checking.php" >
             <input type="hidden" name="form_type" value="personal">
             <div class="form-group">
-                <label class="control-label col-sm-2" for="famiy_name">Family Name:</label>
+                <label class="control-label col-sm-2" for="famiy_name">Family Name<span class="required">*</span>:</label>
                 <div class="col-sm-10">
-                    <input required="required" name="personal[family_name]" type="text" class="form-control" id="family_name" placeholder="Family Name">
+                    <input required="required" name="personal[family_name]" type="text" class="form-control" id="family_name" placeholder="Family Name"
+                        <?php echo (!$errorInput) ?  null :  "value='$errorInput[family_name]'"; ?>>
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2" for="given_name">Given Name:</label>
+                <label class="control-label col-sm-2" for="given_name">Given Name<span class="required">*</span>:</label>
                 <div class="col-sm-10">
-                    <input name="personal[given_name]" required="required" type="text" class="form-control" id="given_name" placeholder="Given Name">
+                    <input required="required" name="personal[given_name]" type="text" class="form-control" id="given_name" placeholder="Given Name"
+                        <?php echo (!$errorInput) ?  null :  "value='$errorInput[given_name]'"; ?>>
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2" for="address_1">Address Line 1: </label>
+                <label class="control-label col-sm-2" for="address_1">Address Line 1<span class="required">*</span>: </label>
                 <div class="col-sm-10">
-                    <input name="personal[address_1]" required="required" type="text" class="form-control" id="address_1" placeholder="Address">
+                    <input required="required" name="personal[address_1]" type="text" class="form-control" id="address_1" placeholder="Address Line 1"
+                        <?php echo (!$errorInput) ?  null :  "value='$errorInput[address_1]'"; ?>>
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="address_2">Address Line 2: </label>
                 <div class="col-sm-10">
-                    <input name="personal[address_2]" type="text" class="form-control" id="address_2" placeholder="Address">
+                    <input name="personal[address_2]" type="text" class="form-control" id="address_2" placeholder="Address Line 2"
+                        <?php echo (!$errorInput) ?  null :  "value='$errorInput[address_2]'"; ?>>
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2" for="country">Country: </label>
+                <label class="control-label col-sm-2" for="country">Country<span class="required">*</span>: </label>
                 <div class="col-sm-10">
-                    <select name="personal[country]" required="required" class="form-control" id="country">
+                    <select required="required" name="personal[country]" class="form-control" id="country">
                         <option disabled selected value> -- select an option -- </option>
-                        <option value="Australia">Australia</option>
-                        <option value="U.S">U.S</option>
+                        <?php
+                            $countries = countryList();
+                            foreach ($countries as $key => $val) {
+                                if ($errorInput) {
+                                    if (strcmp($errorInput['country'], $key) == 0) {
+                                        echo "<option selected = 'selected' value='$key'>$val</option>";
+                                    } else {
+                                        echo "<option value='$key'>$val</option>";
+                                    }
+                                } else {
+                                    echo "<option value='$key'>$val</option>";
+                                }
+                            }
+                        ?>
                     </select>
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2" for="state">State: </label>
+                <label class="control-label col-sm-2" for="state">State<span class="required optional">*</span>: </label>
                 <div class="col-sm-10">
-                    <input name="personal[state]" type="text" class="form-control" id="state" placeholder="State">
+                    <input name="personal[state]" type="text" class="form-control" id="state" placeholder="State"
+                        <?php echo (!$errorInput) ?  null :  "value='$errorInput[state]'"; ?>>
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2" for="suburb">Suburb: </label>
+                <label class="control-label col-sm-2" for="suburb">Suburb<span class="required">*</span>: </label>
                 <div class="col-sm-4">
-                    <input name="personal[suburb]" required="required" type="text" class="form-control" id="suburb" placeholder="Suburb">
+                    <input required="required" name="personal[suburb]" type="text" class="form-control" id="suburb" placeholder="Suburb"
+                        <?php echo (!$errorInput) ?  null :  "value='$errorInput[suburb]'"; ?>>
                 </div>
-                <label class="control-label col-sm-2" for="postcode">Postcode </label>
+                <label class="control-label col-sm-2" for="postcode">Postcode<span class="required optional">*</span>: </label>
                 <div class="col-sm-4">
-                    <input name="personal[postcode]" type="text" class="form-control" id="postcode" placeholder="Postcode">
+                    <input name="personal[postcode]" type="text" class="form-control" id="postcode" placeholder="Postcode"
+                        <?php echo (!$errorInput) ?  null :  "value='$errorInput[postcode]'"; ?>>
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="control-label col-sm-2" for="email">Email:</label>
+                <label class="control-label col-sm-2" for="email">Email<span class="required">*</span>:</label>
                 <div class="col-sm-10">
-                    <input name="personal[email]" required="required" type="email" class="form-control" id="email" placeholder="Email">
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div class="form-group">
-                        <label class="control-label col-sm-2" for="mobile_number">Contact Number: </label>
-                        <div class="col-sm-10">
-                            <input name="personal[mobile_number]" type="text" class="form-control" id="mobile_number" placeholder="Mobile Phone Number">
-                        </div>
-                        <div class="col-sm-10 col-sm-offset-2 hidden">
-                            <input name="personal[business_number]" type="text" class="form-control" id="business_number" placeholder="Business Phone Number">
-                        </div>
-                        <div class="col-sm-10 col-sm-offset-2 hidden">
-                            <input name="personal[work_number]" type="text" class="form-control" id="work_number" placeholder="Work Phone Number">
-                        </div>
-                        <div class="col-sm-2 col-sm-offset-10 btn btn-default">
-                            Add More Number
-                        </div>
-                    </div>
+                    <input required="required" name="personal[email]"  class="form-control" id="email" placeholder="Email"
+                        <?php echo (!$errorInput) ?  null :  "value='$errorInput[email]'"; ?>>
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-sm-10"></div>
-                <input class="btn btn-default btn-success col-sm-2 form-control" type="submit" value="Stage 2 - Payment Details">
+                <label class="control-label col-sm-2" for="mobile_number">Mobile Number: </label>
+                <div class="col-sm-10">
+                    <input name="personal[mobile_number]" type="text" class="form-control" id="mobile_number" placeholder="Mobile Phone Number (Number Only)"
+                        <?php echo (!$errorInput) ?  null :  "value='$errorInput[mobile_number]'"; ?>>
+                </div>
             </div>
 
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="business_number_number">Business No:</label>
+                <div class="col-sm-10">
+                    <input name="personal[business_number]" type="text" class="form-control" id="business_number" placeholder="Business Phone Number (Number Only)"
+                        <?php echo (!$errorInput) ?  null :  "value='$errorInput[business_number]'"; ?>>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="work_number">Work Number:</label>
+                <div class="col-sm-10">
+                    <input name="personal[work_number]" type="text" class="form-control" id="work_number" placeholder="Work Phone Number (Number Only)"
+                        <?php echo (!$errorInput) ?  null :  "value='$errorInput[work_number]'"; ?>>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-2 col-sm-offset-10"></div>
+                <input id="personal_submit" class="btn btn-default btn-lg pull-right" type="submit" value="Stage 2 - Payment Details">
+            </div>
         </form>
-
-
-        <!-- Site footer -->
-        <footer class="footer"> </footer>
-
     </div>
     <!-- /container -->
-
-
     <?php
         include 'script.php';
+        unset($_SESSION['errors']);
+        unset($_SESSION['personal_error']);
     ?>
 
 
