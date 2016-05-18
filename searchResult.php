@@ -14,7 +14,7 @@ session_start ();
 <title>Internet Programming - Assingment 1</title>
 
 	<?php
-		include 'style.php';
+	include 'style.php';
 	?>
 </head>
 
@@ -49,15 +49,25 @@ function validate()
 
 include "database_connector.php";
 
-if (isset ( $_SESSION ["citySelected"] ) && (isset ( $_POST ["searchTypeFrom"] ) or isset ( $_POST ["searchTypeTo"] ) or isset ( $_POST ["searchTypeBoth"] ))) {
+if (isset ( $_POST ["fromSelect"] ) || (isset ( $_POST ["toSelect"] ))) {
 	
-	$selected_city = $_SESSION ['citySelected'];
-	if (isset ( $_POST ["searchTypeFrom"] )) {
-		$query_string = "select * from flights where (from_city like '$selected_city')";
-	} else if (isset ( $_POST ["searchTypeTo"] ) && ($_POST ["searchTypeTo"])) {
-		$query_string = "select * from flights where (to_city like '$selected_city')";
-	} else if (isset ( $_POST ["searchTypeBoth"] ) && ($_POST ["searchTypeBoth"])) {
-		$query_string = "select * from flights where (to_city like '$selected_city') or (from_city like '$selected_city') order by price";
+	if (isset ( $_POST ["fromSelect"] ) && (! isset ( $_POST ["toSelect"] ))) {
+		
+		$from_city = $_POST ["fromSelect"];
+		$query_string = "select * from flights where (from_city like '$from_city')";
+	} 
+
+	else if (isset ( $_POST ["toSelect"] ) && (! isset ( $_POST ["fromSelect"] ))) {
+		
+		$to_city = $_POST ["toSelect"];
+		$query_string = "select * from flights where (to_city like '$to_city')";
+	} 
+
+	else if (isset ( $_POST ["fromSelect"] ) && (isset ( $_POST ["toSelect"] ))) {
+		
+		$from_city = $_POST ["fromSelect"];
+		$to_city = $_POST ["toSelect"];
+		$query_string = "select * from flights where (from_city like '$from_city') and (to_city like '$to_city')";
 	}
 	
 	$result = mysql_query ( $query_string );
@@ -99,7 +109,7 @@ mysql_close ( $link );
 
 
 	<?php
-		include 'script.php';
+	include 'script.php';
 	?>
 
 </body>

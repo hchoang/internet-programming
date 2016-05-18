@@ -1,136 +1,161 @@
-<?php
-session_start ();
-?>
 <!DOCTYPE html>
 <html lang="en" class="gr__getbootstrap_com">
 <head>
-<meta charset="utf-8">
-<meta content="IE=edge" http-equiv="X-UA-Compatible">
-<meta content="width=device-width, initial-scale=1" name="viewport">
-<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-<meta content="" name="description">
-<meta content="" name="author">
-
 <title>Internet Programming - Assingment 1</title>
+
 	<?php
-		include 'style.php';
+	include 'style.php';
 	?>
-<style>
+
+<style type="text/css">
+.linksblok div {
+	display: inline-block;
+}
 </style>
-
-<script type="text/javascript">
-
-</script>
-
 </head>
-
 <body>
 
 	<div class="container">
-
 		 <?php
 			include 'navi-bar.php';
-			?>
-		<p></p>
-		<div class="container col-md-7">
-			<form action="" method="post">
-				<p></p>
-				<div class="btn-group-vertical col-md-5" role="group"
-					aria-label="Vertical button group" id="cityButton">
-					<input type="submit" name="city" value="Adelaide"
-						class="btn btn-default">
-					</button>
-					<input type="submit" name="city" value="Albany"
-						class="btn btn-default">
-					</button>
-					<input type="submit" name="city" value="Alice Springs"
-						class="btn btn-default">
-					</button>
-					<input type="submit" name="city" value="Bendigo"
-						class="btn btn-default">
-					</button>
-					<input type="submit" name="city" value="Brisbane"
-						class="btn btn-default">
-					</button>
-					<input type="submit" name="city" value="Broken Hill"
-						class="btn btn-default">
-					</button>
-					<input type="submit" name="city" value="Broome"
-						class="btn btn-default">
-					</button>
-					<input type="submit" name="city" value="Cairns"
-						class="btn btn-default">
-					</button>
-					<input type="submit" name="city" value="Canberra"
-						class="btn btn-default">
-					</button>
-					<input type="submit" name="city" value="Darwin"
-						class="btn btn-default">
-					</button>
+        ?>
+     <div class="container col-md-6 col-md-offset-3">
+
+			<form role="form" method="post" action="searchResult.php">
+				<br /> <br />
+				<div class="btn-group" data-toggle="buttons">
+					<label class="btn btn-primary btn-lg"> <input type="radio"
+						name="searchType" id="fromRadio" value="fromRadio">Select
+						Departure
+					</label> <label class="btn btn-primary btn-lg"> <input type="radio"
+						name="searchType" id="toRadio" value="toRadio">Select Destination
+					</label> <label class="btn btn-primary btn-lg"> <input type="radio"
+						name="searchType" id="bothRadio" value="bothRadio">Select Both
+						Cities
+					</label>
 				</div>
-				<div class="btn-group-vertical col-md-5" role="group"
-					aria-label="Vertical button group" id="cityButton">
-					<input type="submit" name="city" value="Hobart"
-						class="btn btn-default">
-					</button>
-					<input type="submit" name="city" value="Kalgoorlie"
-						class="btn btn-default">
-					</button>
-					<input type="submit" name="city" value="Launceston"
-						class="btn btn-default">
-					</button>
-					<input type="submit" name="city" value="Melbourne"
-						class="btn btn-default">
-					</button>
-					<input type="submit" name="city" value="Mt Isa"
-						class="btn btn-default">
-					</button>
+				<br /> <br /> <br /> <br />
 
-					<input type="submit" name="city" value="Newcastle"
-						class="btn btn-default">
-					</button>
-					<input type="submit" name="city" value="Perth"
-						class="btn btn-default">
-					</button>
-					<input type="submit" name="city" value="Pt Augusta"
-						class="btn btn-default">
-					</button>
-					<input type="submit" name="city" value="Rockhampton"
-						class="btn btn-default">
-					</button>
-					<input type="submit" name="city" value="Sydney"
-						class="btn btn-default">
-					</button>
-
+				<!-- /form-group -->
+				<div class="form-group col-md-6 col-md-offset-3">
+					<label for="from">From:</label>
+                    <select
+						class="form-control " id="fromSelect" name="fromSelect">
+					</select>
+				</div>
+				<br /> <br /> <br /> <br />
+				<div class="form-group col-md-6 col-md-offset-3">
+					<label for="to">To:</label>
+					<select class="form-control " id="toSelect" name="toSelect">
+					</select>
+				</div>
+				<br /> <br /> <br /> <br /> <br /> <br />
+				<div align="center">
+					<button id="searchbtn" type="submit" class='btn btn-info btn-lg col-md-4 col-md-offset-4'>Search</button>
 				</div>
 			</form>
-
-		</div>
-		<div class="container col-md-5">
-			<form action="searchResult.php" method="post">
-
-	<?php
-	if (isset ( $_POST ["city"] ) && ! empty ( $_POST ["city"] )) {
-		echo '<br /><h2>You selected ' . $_POST ['city'] . '</h2><br />';
-		
-		$_SESSION ['citySelected'] = $_POST ['city'];
-		
-		echo "<br /><input type='submit' name='searchTypeFrom' value='Search As Departure' class='btn btn-default btn-lg col-md-8'><br /><br />";
-		echo "<br /><input type='submit' name='searchTypeTo' value='Search As Destination' class='btn btn-default btn-lg col-md-8'><br /><br />";
-		echo "<br /><input type='submit' name='searchTypeBoth' value='Search All' class='btn btn-default btn-lg col-md-8'><br /><br />";
-	}
-	?>
-	</form>
-
 		</div>
 	</div>
-	<!-- /container -->
-
 
 	<?php
-		include 'script.php';
+		include "script.php";
 	?>
 
+	<script type="text/javascript">
+		$(document).ready(function() {
+            $('#fromSelect, #toSelect').prop('disabled', true);
+            $("#fromRadio, #toRadio, #bothRadio").prop('checked', false);
+			var radioSelected = false;
+			$("#fromRadio, #toRadio, #bothRadio").on("change", function(){
+					radioSelected = true;
+					$('#searchbtn').attr("disabled", false);
+					if ($("#fromRadio").is(':checked')) {
+						$('#toSelect').attr('disabled', 'disabled');
+						$('#fromSelect').removeAttr('disabled');
+
+					} else if ($("#toRadio").is(':checked')) {
+						$('#fromSelect').attr('disabled', 'disabled');
+						$('#toSelect').removeAttr('disabled');
+					} else if ($("#bothRadio").is(":checked")) {
+						$('#fromSelect').removeAttr('disabled');
+						$('#toSelect').removeAttr('disabled');
+					}
+                    if($("#fromRadio").is(':checked')) {
+                        $.ajax({
+                            type: 'POST',
+                            url:"connectDB_weijian.php",
+                            data: {action: "getFrom"},
+                            success:function(data){
+                                for(var i=0; i < data.length;i++)
+                                {
+
+                                    $("#fromSelect").append("<option value='" + data[i]+"'>" + data[i] + "</option>");
+                                }
+                            }
+                        });
+                        $("#toSelect").empty();
+                    } else if($("#toRadio").is(':checked')) {
+                        $.ajax({
+                            type: 'POST',
+                            url:"connectDB_weijian.php",
+                            data: {action: "getTo"},
+                            success:function(data){
+                                for(var i=0; i< data.length;i++)
+                                {
+                                    $("#toSelect").append("<option value='" + data[i]+"'>" + data[i] + "</option>");
+                                }
+                            }
+                        });
+
+                        $("#fromSelect").empty();
+                    } else if($("#bothRadio").is(':checked')) {
+                        $.ajax({
+                            type: 'POST',
+                            url:"connectDB_weijian.php",
+                            data: {action: "getFrom"},
+                            success:function(data){
+                                for(var i=0; i < data.length; i++)
+                                {
+                                    $("#fromSelect").append("<option value='" + data[i]+"'>" + data[i] + "</option>");
+                                }
+                            }
+                        });
+
+                        $.ajax({
+                            type: 'POST',
+                            url:"connectDB_weijian.php",
+                            data: {action: "bothfrom", city: $("#fromSelect option:selected").text()},
+                            success:function(data){
+                                $("#toSelect").empty();
+                                for(var i=0;i < data.length;i++)
+                                {
+                                    $("#toSelect").append("<option value='" + data[i]+"'>" + data[i] + "</option>");
+                                }
+
+                            }
+                        });//ajax ended
+
+                        $("#fromSelect").change(function() {
+                            $.ajax({
+                                type: 'POST',
+                                url:"connectDB_weijian.php",
+                                data: {action: "bothfrom", city: $("#fromSelect option:selected").text()},
+                                success:(function(data){
+                                    $("#toSelect").empty();
+                                    for(var i=0;i < data.length; i++)
+                                    {
+                                        $("#toSelect").append("<option value='" + data[i] +"'>" + data[i] + "</option>");
+                                    }
+
+                                })
+                            });//ajax ended
+                        });//select change
+                    }
+				});
+			if(radioSelected) $('#searchbtn').attr("disabled", false);
+			else $('#searchbtn').attr("disabled", true);
+            });
+	</script>
 
 </body>
 <span class="gr__tooltip"> <span class="gr__tooltip-content"></span> <i
